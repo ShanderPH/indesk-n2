@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+:root {
+  /* Design System Colors - TEMA CLARO FORÇADO */
+  --bg-primary: #F5F7FA;
+  --bg-secondary: #FFFFFF;
+  --accent-primary: #86BD00;
+  --accent-hover: #75a500;
+  
+  /* Textos */
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+  --text-white: #ffffff;
+  
+  /* Bordas e Divisores */
+  --border-light: #e2e8f0;
+  --border-medium: #cbd5e0;
+  --divider: #edf2f7;
+  
+  /* Estados */
+  --success: #48bb78;
+  --warning: #ed8936;
+  --error: #f56565;
+  --info: #4299e1;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* Legacy compatibility */
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --surface: var(--bg-secondary);
+  --accent: var(--accent-primary);
+  --border: var(--border-light);
+}
+
+@theme inline {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-hover: var(--accent-hover);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border-light: var(--border-light);
+  --color-border-medium: var(--border-medium);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --font-sans: system-ui, -apple-system, sans-serif;
+}
+
+/* FORÇAR TEMA CLARO - Remover dark mode */
+html, body {
+  background-color: #F5F7FA !important;
+  color: #1a202c !important;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* COMPONENTES COM TEMA CLARO FORÇADO */
+
+/* Cards, superfícies e containers */
+.card, .surface, .modal, .sidebar, [class*="bg-card"], [class*="bg-surface"] {
+  background-color: #FFFFFF !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: var(--shadow-sm) !important;
+  color: #1a202c !important;
+}
+
+/* Header e navegação */
+.header, .navbar, .topbar, header, nav {
+  background-color: #FFFFFF !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  color: #1a202c !important;
+}
+
+/* Botões primários */
+.btn-primary, .button-primary, [class*="bg-accent"] {
+  background-color: #86BD00 !important;
+  border-color: #86BD00 !important;
+  color: #ffffff !important;
+}
+
+.btn-primary:hover, .button-primary:hover, [class*="bg-accent"]:hover {
+  background-color: #75a500 !important;
+  border-color: #75a500 !important;
+}
+
+/* Textos e tipografia */
+h1, h2, h3, h4, h5, h6 {
+  color: #1a202c !important;
+}
+
+p, span, div, label {
+  color: #4a5568 !important;
+}
+
+.text-muted, .text-secondary, [class*="text-muted"], [class*="text-secondary"] {
+  color: #718096 !important;
+}
+
+/* Links */
+a {
+  color: #86BD00 !important;
+}
+
+a:hover {
+  color: #75a500 !important;
+}
+
+/* Inputs e form elements */
+input, textarea, select {
+  background-color: #FFFFFF !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #1a202c !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #86BD00 !important;
+  box-shadow: 0 0 0 3px rgba(134, 189, 0, 0.1) !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F5F7FA;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+/* Focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-accent-primary focus:ring-offset-2;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Utility classes específicas */
+.bg-app {
+  background-color: #F5F7FA !important;
+}
+
+.bg-surface {
+  background-color: #FFFFFF !important;
+}
+
+.text-app-primary {
+  color: #1a202c !important;
+}
+
+.text-app-secondary {
+  color: #4a5568 !important;
+}
+
+.text-app-muted {
+  color: #718096 !important;
+}
+
+.border-app {
+  border-color: #e2e8f0 !important;
+}
+
+.shadow-app {
+  box-shadow: var(--shadow-sm) !important;
+}
