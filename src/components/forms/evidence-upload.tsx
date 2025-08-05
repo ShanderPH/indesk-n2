@@ -1,14 +1,13 @@
 'use client'
 
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useMemo } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 import { BugReportFormData } from '@/lib/validations'
 import { Evidence, UploadProgress } from '@/types'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Select } from '@/components/ui/select'
+import { Select, SelectOption } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
@@ -18,9 +17,7 @@ import {
   Image as ImageIcon, 
   Video, 
   FileText, 
-  Eye,
-  Download,
-  Trash2
+  Eye
 } from 'lucide-react'
 import { cn, generateId, compressImage } from '@/lib/utils'
 import { EVIDENCE_TYPES } from '@/lib/constants'
@@ -31,7 +28,8 @@ interface EvidenceUploadProps {
 
 export function EvidenceUpload({ form }: EvidenceUploadProps) {
   const { setValue, watch } = form
-  const evidences = watch('evidences') || []
+  const watchedEvidences = watch('evidences')
+  const evidences = useMemo(() => watchedEvidences || [], [watchedEvidences])
   
   const [isDragging, setIsDragging] = useState(false)
   const [uploadProgress, setUploadProgress] = useState<UploadProgress[]>([])
@@ -52,22 +50,7 @@ export function EvidenceUpload({ form }: EvidenceUploadProps) {
     setIsDragging(false)
   }, [])
 
-  const handleDrop = useCallback(async (e: React.DragEvent) => {
-    e.preventDefault()
-    setIsDragging(false)
-    
-    const files = Array.from(e.dataTransfer.files)
-    await handleFiles(files)
-  }, [])
-
-  const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const files = Array.from(e.target.files)
-      await handleFiles(files)
-    }
-  }, [])
-
-  const handleFiles = async (files: File[]) => {
+  const handleFiles = useCallback(async (files: File[]) => {
     for (const file of files) {
       const id = generateId()
       const progressItem: UploadProgress = {
@@ -132,7 +115,22 @@ export function EvidenceUpload({ form }: EvidenceUploadProps) {
         )
       }
     }
-  }
+  }, [evidences, setValue, newEvidence.description])
+
+  const handleDrop = useCallback(async (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragging(false)
+    
+    const files = Array.from(e.dataTransfer.files)
+    await handleFiles(files)
+  }, [handleFiles])
+
+  const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files)
+      await handleFiles(files)
+    }
+  }, [handleFiles])
 
   const removeEvidence = (evidenceId: string) => {
     setValue(
@@ -259,7 +257,7 @@ export function EvidenceUpload({ form }: EvidenceUploadProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Select
-                options={EVIDENCE_TYPES}
+                options={EVIDENCE_TYPES as unknown as SelectOption[]}
                 value={newEvidence.type}
                 onValueChange={(value) => setNewEvidence(prev => ({ ...prev, type: value as Evidence['type'] }))}
                 placeholder="Tipo"
@@ -340,6 +338,7 @@ export function EvidenceUpload({ form }: EvidenceUploadProps) {
                     
                     {evidence.file && evidence.type === 'IMAGE' && (
                       <div className="mt-2">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={URL.createObjectURL(evidence.file)}
                           alt={evidence.description}

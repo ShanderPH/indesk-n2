@@ -52,7 +52,7 @@ ${logUrl ? `|*URL do Log*|[${logUrl}|${logUrl}]|` : ''}
 
 h2. 🔄 Reprodução do Bug
 h3. Passos para Reproduzir:
-${stepsToReproduce.map((step, index) => `# ${step}`).join('\n')}
+${stepsToReproduce.map((step) => `# ${step}`).join('\n')}
 
 h3. ✅ Resultado Esperado:
 ${expectedResult}

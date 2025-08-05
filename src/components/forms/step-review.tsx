@@ -20,12 +20,10 @@ import {
   Eye, 
   EyeOff, 
   FileText, 
-  Code, 
   FileJson,
   Check,
   AlertCircle
 } from 'lucide-react'
-import { cn } from '@/lib/utils'
 
 interface StepReviewProps {
   form: UseFormReturn<BugReportFormData>
@@ -40,9 +38,9 @@ export function StepReview({ form }: StepReviewProps) {
   const [isPreviewExpanded, setIsPreviewExpanded] = useState(true)
 
   const templates = {
-    jira: generateJiraTemplate(formData as any),
-    markdown: generateMarkdownTemplate(formData as any),
-    json: generateJSONTemplate(formData as any)
+    jira: generateJiraTemplate(formData as BugReportFormData),
+    markdown: generateMarkdownTemplate(formData as BugReportFormData),
+    json: generateJSONTemplate(formData as BugReportFormData)
   }
 
   const formatLabels = {
@@ -65,7 +63,7 @@ export function StepReview({ form }: StepReviewProps) {
         title: 'Copiado!',
         description: 'Template copiado para a área de transferência'
       })
-    } catch (error) {
+    } catch {
       addToast({
         type: 'error',
         title: 'Erro',
@@ -142,7 +140,7 @@ export function StepReview({ form }: StepReviewProps) {
             {validation.isComplete && (
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <p className="text-green-800">
-                  ✅ Formulário completo e pronto para gerar o template JIRA!
+                  ✅ Formulário completo e pronto para gerar o template &quot;JIRA&quot;!
                 </p>
               </div>
             )}
@@ -235,7 +233,7 @@ export function StepReview({ form }: StepReviewProps) {
                   type="button"
                   variant={selectedFormat === format ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setSelectedFormat(format as any)}
+                  onClick={() => setSelectedFormat(format as 'jira' | 'markdown' | 'json')}
                 >
                   <Icon className="w-4 h-4 mr-2" />
                   {label}
@@ -291,9 +289,9 @@ export function StepReview({ form }: StepReviewProps) {
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <h4 className="font-medium text-blue-800 mb-2">📝 Como usar o template:</h4>
               <ol className="text-sm text-blue-700 space-y-1 list-decimal list-inside">
-                <li>Copie o template JIRA gerado acima</li>
-                <li>Acesse o sistema JIRA da equipe</li>
-                <li>Crie uma nova issue do tipo "Bug"</li>
+                <li>Copie o template &quot;JIRA&quot; gerado acima</li>
+                <li>Acesse o sistema &quot;JIRA&quot; da equipe</li>
+                <li>Crie uma nova issue do tipo &quot;Bug&quot;</li>
                 <li>Cole o template na descrição</li>
                 <li>Anexe as evidências manualmente</li>
                 <li>Configure os campos personalizados</li>
@@ -305,7 +303,7 @@ export function StepReview({ form }: StepReviewProps) {
               <h4 className="font-medium text-amber-800 mb-2">⚠️ Lembrete Importante:</h4>
               <p className="text-sm text-amber-700">
                 Este template foi gerado automaticamente. Revise as informações antes 
-                de criar o ticket no JIRA e certifique-se de que todas as evidências 
+                de criar o ticket no &quot;JIRA&quot; e certifique-se de que todas as evidências 
                 foram anexadas corretamente.
               </p>
             </div>

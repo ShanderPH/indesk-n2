@@ -5,7 +5,7 @@ import { BugReportFormData } from '@/lib/validations'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Select } from '@/components/ui/select'
+import { Select, SelectOption } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -15,7 +15,7 @@ import {
   SYSTEM_IMPACT_OPTIONS,
   JIRA_MODULES 
 } from '@/lib/constants'
-import { Plus, X, Upload, Globe, Monitor } from 'lucide-react'
+import { Plus, X, Globe } from 'lucide-react'
 
 interface StepReproductionProps {
   form: UseFormReturn<BugReportFormData>
@@ -124,7 +124,7 @@ export function StepReproduction({
           <div className="space-y-2">
             <Label htmlFor="frequency">Frequência *</Label>
             <Select
-              options={FREQUENCY_OPTIONS}
+              options={FREQUENCY_OPTIONS as unknown as SelectOption[]}
               value={formData.frequency}
               onValueChange={(value) => setValue('frequency', value as BugReportFormData['frequency'])}
               placeholder="Selecione a frequência"
@@ -202,7 +202,7 @@ export function StepReproduction({
             <div className="space-y-2">
               <Label htmlFor="device">Dispositivo *</Label>
               <Select
-                options={DEVICE_OPTIONS}
+                options={DEVICE_OPTIONS as unknown as SelectOption[]}
                 value={formData.device}
                 onValueChange={(value) => setValue('device', value as BugReportFormData['device'])}
                 placeholder="Selecione o dispositivo"
@@ -240,7 +240,7 @@ export function StepReproduction({
             <div className="space-y-2">
               <Label htmlFor="systemImpact">Impacto no Sistema *</Label>
               <Select
-                options={SYSTEM_IMPACT_OPTIONS}
+                options={SYSTEM_IMPACT_OPTIONS as unknown as SelectOption[]}
                 value={formData.systemImpact}
                 onValueChange={(value) => setValue('systemImpact', value as BugReportFormData['systemImpact'])}
                 placeholder="Selecione o impacto"

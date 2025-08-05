@@ -42,7 +42,7 @@ export const bugReportSchema = z.object({
   device: z.enum(['DESKTOP', 'MOBILE', 'TABLET']),
   
   // Evidências
-  evidences: z.array(evidenceSchema).optional().default([]),
+  evidences: z.array(evidenceSchema).default([]),
   
   // Métricas
   affectedUsers: z.number().min(1, 'Número de usuários afetados deve ser maior que 0'),
